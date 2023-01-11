@@ -1,4 +1,6 @@
 #include <msp430x14x.h>
+#include <stdlib.h>
+#include <time.h>
 #include "lcd.h"
 #include "portyLcd.h"
 #include "menu.h"
@@ -32,7 +34,7 @@ void InitClock(void)
 void main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;
-
+  srand(time(NULL));
   InitPortsLcd();
   InitLCD();
   clearDisplay();

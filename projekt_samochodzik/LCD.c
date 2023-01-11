@@ -1,24 +1,13 @@
 #include <msp430x14x.h>
-#include "lcd.h"
 #include "portyLcd.h"
+// #include "LCD.h"
 
 #define bitset(var, bitno) ((var) |= 1 << (bitno))
 #define bitclr(var, bitno) ((var) &= ~(1 << (bitno)))
 
-void Delay(unsigned int a);
-void Delayx100us(unsigned char b);
-void _E(void);
-
-void clearDisplay()
-{
-  SEND_CMD(CLR_DISP);
-  Delayx100us(10);
-}
-
-void gotoSecondLine()
-{
-  SEND_CMD(DD_RAM_ADDR2);
-}
+// void Delay(unsigned int a);
+// void Delayx100us(unsigned char b);
+// void _E(void);
 
 void Delay(unsigned int a)
 {
@@ -37,6 +26,17 @@ void Delayx100us(unsigned char b)
   int j;
   for (j = 0; j != b; ++j)
     Delay(_100us);
+}
+
+void clearDisplay()
+{
+  SEND_CMD(CLR_DISP);
+  Delayx100us(10);
+}
+
+void gotoSecondLine()
+{
+  SEND_CMD(DD_RAM_ADDR2);
 }
 
 void _E(void)
@@ -110,4 +110,8 @@ void InitLCD(void)
   Delayx100us(250);
   Delayx100us(250);
   Delayx100us(250);
+}
+
+void MAKE_DEFINED_CHAR(unsigned char c)
+{
 }
