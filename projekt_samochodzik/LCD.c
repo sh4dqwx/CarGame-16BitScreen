@@ -63,6 +63,12 @@ void SEND_CHAR(unsigned char d)
   _E();              // toggle E for LCD
 }
 
+void SEND_TEXT(unsigned char[] text)
+{
+  for (unsigned int i = 0; i < sizeof(text) / sizeof(char); i++)
+    SEND_CHAR(text[i]);
+}
+
 void SEND_CMD(unsigned char e)
 {
   int temp;

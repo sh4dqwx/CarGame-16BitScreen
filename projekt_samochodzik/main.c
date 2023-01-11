@@ -1,6 +1,8 @@
 #include <msp430x14x.h>
 #include "lcd.h"
 #include "portyLcd.h"
+#include "menu.h"
+#include "game.h"
 
 //---------------- zmienne globalne ----------------
 unsigned int i = 0;
@@ -36,15 +38,12 @@ void main(void)
   clearDisplay();
   InitClock();
 
-  while (1)
-  {
-    // Tu zaczynamy program
-    SEND_CHAR("A");
-  }
+  menu();
 }
 
+//------------------- przerwania -------------------
 #pragma vector = TIMERA0_VECTOR
 __interrupt void Timer_A(void)
 {
-  // Tu używamy przerwań
+  timer();
 }
