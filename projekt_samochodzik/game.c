@@ -3,7 +3,11 @@
 #include <time.h>
 #include "LCD.h"
 
-// #define znak_sam
+#define carUp 8
+#define carDown 9
+#define obsUp 10
+#define obsDown 11
+#define obsBig 12
 
 //---------------- zmienne globalne ----------------
 unsigned int time = 0;

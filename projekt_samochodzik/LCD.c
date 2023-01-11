@@ -104,14 +104,24 @@ void InitLCD(void)
   LCD_Data &= ~BIT4;
   _E(); // toggle E for LCD
 
+  SEND_CMD(CG_RAM_ADDR);
+  MAKE_DEFINED_CHAR({31, 31, 31, 31, 0, 0, 0, 0});    //samochód góra (8)
+  MAKE_DEFINED_CHAR({0, 0, 0, 0, 31, 31, 31, 31});    //samochód dół (9)
+  MAKE_DEFINED_CHAR({15, 30, 30, 15, 0, 0, 0, 0});    //przeszkoda góra (10)
+  MAKE_DEFINED_CHAR({0, 0, 0, 0, 15, 30, 30, 15});    //przeszkoda dół (11)
+  MAKE_DEFINED_CHAR({7, 14, 30, 30, 30, 30, 14, 7});  //duża przeszkoda (12)
+
   SEND_CMD(DISP_ON);
   SEND_CMD(CLR_DISP);
+  SEND_CMD(DD_RAM_ADDR);
   Delayx100us(250);
   Delayx100us(250);
   Delayx100us(250);
   Delayx100us(250);
 }
 
-void MAKE_DEFINED_CHAR(unsigned char c)
+void MAKE_DEFINED_CHAR(unsigned char[] c)
 {
+  for(unsigned char i=0; i<8; i++)
+    SEND_CHAR(c[i]);
 }
