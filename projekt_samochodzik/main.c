@@ -11,41 +11,41 @@ unsigned int i = 0;
 
 void InitClock(void)
 {
-  BCSCTL1 |= XTS;
+    BCSCTL1 |= XTS;
 
-  do
-  {
-    IFG1 &= ~OFIFG;
-    for (i = 0xFF; i > 0; i--)
-      ;
-  } while ((IFG1 & OFIFG) == OFIFG);
+    do
+    {
+        IFG1 &= ~OFIFG;
+        for (i = 0xFF; i > 0; i--)
+            ;
+    } while ((IFG1 & OFIFG) == OFIFG);
 
-  BCSCTL1 |= DIVA_1;
-  BCSCTL2 |= SELM0 | SELM1;
+    BCSCTL1 |= DIVA_1;
+    BCSCTL2 |= SELM0 | SELM1;
 
-  TACTL = TASSEL_1 + MC_1 + ID_3;
-  CCTL0 = CCIE;
-  CCR0 = 50000;
+    TACTL = TASSEL_1 + MC_1 + ID_3;
+    CCTL0 = CCIE;
+    CCR0 = 50000;
 
-  _EINT();
+    _EINT();
 }
 
 //------------------ main program ------------------
 void main(void)
 {
-  WDTCTL = WDTPW + WDTHOLD;
-  srand(time(NULL));
-  InitPortsLcd();
-  InitLCD();
-  clearDisplay();
-  InitClock();
+    WDTCTL = WDTPW + WDTHOLD;
+    srand(time(NULL));
+    InitPortsLcd();
+    InitLCD();
+    clearDisplay();
+    InitClock();
 
-  menu();
+    menu();
 }
 
 //------------------- przerwania -------------------
 #pragma vector = TIMERA0_VECTOR
 __interrupt void Timer_A(void)
 {
-  timer();
+    timer();
 }

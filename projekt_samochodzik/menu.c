@@ -33,6 +33,22 @@ void results()
 
 void createUser()
 {
+    char player1[3];
+    int index = 0;
+    int litera = 129; // Z-154
+    while (1)
+    {
+        if (~B1)
+        {
+            litera++;
+            if (litera == 154)
+                litera = 129;
+        }
+        if (~B2)
+            index++;
+        for (int i = 0; i < 3; i++)
+            char[index] = (char)litera;
+    }
 }
 
 void menu()
