@@ -2,10 +2,10 @@
 #include "LCD.h"
 #include "game.h"
 
-#define B1 BIT4 &P4IN
-#define B2 BIT5 &P4IN
-#define B3 BIT6 &P4IN
-#define B4 BIT7 &P4IN
+#define B1 BIT4&P4IN
+#define B2 BIT5&P4IN
+#define B3 BIT6&P4IN
+#define B4 BIT7&P4IN
 
 //---------------- zmienne globalne ----------------
 struct User
@@ -22,8 +22,9 @@ void showOptions()
 {
     clearDisplay();
     SEND_TEXT("      MENU");
+    gotoSecondLine();
     SEND_TEXT("Sta ");
-    SEND_TEXT("Wyn  ");
+    SEND_TEXT("Wyn ");
     SEND_TEXT("Utw");
 }
 
@@ -33,7 +34,7 @@ void results()
 
 void createUser()
 {
-    char player1[3];
+    /*char player1[3];
     int index = 0;
     int litera = 129; // Z-154
     while (1)
@@ -48,7 +49,7 @@ void createUser()
             index++;
         for (int i = 0; i < 3; i++)
             char[index] = (char)litera;
-    }
+    }*/
 }
 
 void menu()
@@ -57,11 +58,13 @@ void menu()
     {
         showOptions();
 
-        if (B1 == 0)
+        if ((B1) == 0)
             game();
-        else if (B2 == 0)
+        else if ((B2) == 0)
             results();
-        else if (B3 == 0)
+        else if ((B3) == 0)
             createUser();
+        
+        Delay(1000);
     }
 }

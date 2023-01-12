@@ -8,6 +8,7 @@
 
 //---------------- zmienne globalne ----------------
 unsigned int i = 0;
+unsigned int counter = 0;
 
 void InitClock(void)
 {
@@ -20,12 +21,12 @@ void InitClock(void)
             ;
     } while ((IFG1 & OFIFG) == OFIFG);
 
-    BCSCTL1 |= DIVA_1;
+    BCSCTL1 |= DIVA_0;
     BCSCTL2 |= SELM0 | SELM1;
 
     TACTL = TASSEL_1 + MC_1 + ID_3;
     CCTL0 = CCIE;
-    CCR0 = 50000;
+    CCR0 = 1000;
 
     _EINT();
 }
@@ -47,5 +48,9 @@ void main(void)
 #pragma vector = TIMERA0_VECTOR
 __interrupt void Timer_A(void)
 {
-    timer();
+    if (counter++ >= 500)
+    {
+        counter = 0;
+        timer();
+    }
 }

@@ -14,14 +14,14 @@ ShowSource=1
 NumStates=_ 1
 State 1=_ 1
 [State Storage]
-Control Register=5306
+Control Register=6192
 [Sequencer]
-Control Register=5306
-NextState0=5306
-NextState1=5306
+Control Register=6192
+NextState0=6192
+NextState1=6192
 [Action Register]
-Break=1
-State Storage=1
+Break=3
+State Storage=3
 [Profiling]
 Enabled=0
 [StackPlugin]
@@ -34,15 +34,9 @@ UseTrigger=1
 TriggerName=main
 LimitSize=0
 ByteLimit=50
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Breakpoints]
-Count=0
+Bp0=_ "STD_CODE" "Memory:0x1830" 1 0 0 0 "" 0 ""
+Count=1
 [FET]
 Extended Clock mode=-1
 Extended Clock Control Enable=0
@@ -61,3 +55,10 @@ SP=0
 SR=0
 all registers=0
 File name=
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
