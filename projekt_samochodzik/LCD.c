@@ -107,17 +107,17 @@ void InitLCD(void)
 
     SEND_CMD(CG_RAM_ADDR);
     unsigned char chars[5][8] = {
-      {31, 31, 31, 31, 0, 0, 0, 0}, // samochód góra (8)
-      {0, 0, 0, 0, 31, 31, 31, 31}, // samochód dół (9)
-      {15, 30, 30, 15, 0, 0, 0, 0}, // przeszkoda góra (10)
-      {0, 0, 0, 0, 15, 30, 30, 15}, // przeszkoda dół (11)
-      {7, 14, 30, 30, 30, 30, 14, 7} // duża przeszkoda (12)
+        {31, 31, 31, 31, 0, 0, 0, 0},  // samochód góra (8)
+        {0, 0, 0, 0, 31, 31, 31, 31},  // samochód dół (9)
+        {15, 30, 30, 15, 0, 0, 0, 0},  // przeszkoda góra (10)
+        {0, 0, 0, 0, 15, 30, 30, 15},  // przeszkoda dół (11)
+        {7, 14, 30, 30, 30, 30, 14, 7} // duża przeszkoda (12)
     };
-    MAKE_DEFINED_CHAR(chars[0]);   
-    MAKE_DEFINED_CHAR(chars[1]);
-    MAKE_DEFINED_CHAR(chars[2]);
-    MAKE_DEFINED_CHAR(chars[3]);
-    MAKE_DEFINED_CHAR(chars[4]);
+    SEND_TEXT(chars[0]);
+    SEND_TEXT(chars[1]);
+    SEND_TEXT(chars[2]);
+    SEND_TEXT(chars[3]);
+    SEND_TEXT(chars[4]);
 
     SEND_CMD(DISP_ON);
     SEND_CMD(CLR_DISP);
@@ -126,10 +126,4 @@ void InitLCD(void)
     Delayx100us(250);
     Delayx100us(250);
     Delayx100us(250);
-}
-
-void MAKE_DEFINED_CHAR(unsigned char c[])
-{
-    for (unsigned char i = 0; i < 8; i++)
-        SEND_CHAR(c[i]);
 }

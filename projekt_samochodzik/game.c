@@ -17,8 +17,9 @@ unsigned int result = 0;
 unsigned int screen[4][16];
 unsigned int position = 0;
 unsigned int pressed = 0;
-unsigned int step = 0;
-unsigned int play = 0;
+unsigned int frame = 0;
+unsigned int gameON = 0;
+unsigned int screenChanged = 0;
 
 //-------------------- funkcje ---------------------
 void generateObstacle()
@@ -98,18 +99,25 @@ void carGoVrrr(int direction)
     screen[position][2] = 0;
     position += direction;
     screen[position][2] = 2;
+    screenChanged = 1;
 }
 
 unsigned int game()
 {
     result = 0;
+    screenChanged = 0;
     initScreen();
     clearDisplay();
     refreshFrame();
-    play = 1;
+    gameON = 1;
     while (1)
     {
-        refreshFrame();
+        if (screenChanged == 1)
+        {
+            refreshFrame();
+            screenChanged = 0;
+        }
+
         if ((B1) == 0 && pressed == 0)
         {
             pressed = 1;
@@ -130,13 +138,14 @@ unsigned int game()
 //------------------- przerwania -------------------
 void timer()
 {
-    if (play == 0)
+    if (gameON == 0)
         return;
 
-    if (step++ >= 2)
+    if (frame++ >= 2)
     {
         generateObstacle();
-        step = 0;
+        frame = 0;
     }
     moveObstacle();
+    screenChanged = 1;
 }

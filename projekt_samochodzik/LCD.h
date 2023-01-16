@@ -7,4 +7,3 @@ void SEND_CHAR(unsigned char c);
 void SEND_TEXT(unsigned char text[]);
 void SEND_CMD(unsigned char e);
 void InitLCD(void);
-void MAKE_DEFINED_CHAR(unsigned char c[]);
