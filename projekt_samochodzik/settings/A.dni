@@ -14,14 +14,14 @@ ShowSource=1
 NumStates=_ 1
 State 1=_ 1
 [State Storage]
-Control Register=6192
+Control Register=6998
 [Sequencer]
-Control Register=6192
-NextState0=6192
-NextState1=6192
+Control Register=6998
+NextState0=6998
+NextState1=6998
 [Action Register]
-Break=3
-State Storage=3
+Break=1
+State Storage=1
 [Profiling]
 Enabled=0
 [StackPlugin]
@@ -35,8 +35,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [Breakpoints]
-Bp0=_ "STD_CODE" "Memory:0x1830" 1 0 0 0 "" 0 ""
-Count=1
+Count=0
 [FET]
 Extended Clock mode=-1
 Extended Clock Control Enable=0

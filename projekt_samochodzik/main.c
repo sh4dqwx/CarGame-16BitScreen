@@ -48,7 +48,7 @@ void main(void)
 #pragma vector = TIMERA0_VECTOR
 __interrupt void Timer_A(void)
 {
-    if (counter++ >= 500)
+    if (counter++ >= 1000)
     {
         counter = 0;
         timer();

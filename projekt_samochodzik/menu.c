@@ -54,16 +54,24 @@ void createUser()
 
 void menu()
 {
+    showOptions();
     while (1)
     {
-        showOptions();
-
         if ((B1) == 0)
+        {
             game();
+            showOptions();
+        }
         else if ((B2) == 0)
+        {
             results();
+            showOptions();
+        }
         else if ((B3) == 0)
+        {
             createUser();
+            showOptions();
+        }
         
         Delay(1000);
     }
