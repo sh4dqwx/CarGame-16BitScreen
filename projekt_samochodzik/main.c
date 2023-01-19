@@ -8,7 +8,6 @@
 
 //---------------- zmienne globalne ----------------
 unsigned int i = 0;
-unsigned int counter = 0;
 
 void InitClock(void)
 {
@@ -48,9 +47,5 @@ void main(void)
 #pragma vector = TIMERA0_VECTOR
 __interrupt void Timer_A(void)
 {
-    if (counter++ >= 1000)
-    {
-        counter = 0;
-        timer();
-    }
+    timer();
 }

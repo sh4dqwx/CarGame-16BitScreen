@@ -20,10 +20,12 @@
 //---------------- zmienne globalne ----------------
 unsigned int result = 0;
 unsigned int screen[4][16];
-unsigned int pressed = 0;
 unsigned int frame = 0;
 unsigned int gameON = 0;
 unsigned int screenChanged = 0;
+unsigned int timeCounter = 0;
+unsigned int frameCounter = 0;
+unsigned int speed = 0;
 int position = 0;
 
 //-------------------- funkcje ---------------------
@@ -33,14 +35,14 @@ void generateObstacle()
     for (int i = 0; i < 4; i++)
     {
         int random = rand() % 2;
-        screen[i][14] = random;
+        screen[i][15] = random;
         if (random == 1)
             obstacles++;
     }
     if (obstacles == 4)
     {
         int random = rand() % 4;
-        screen[random][14] = 0;
+        screen[random][15] = 0;
     }
 }
 
@@ -62,7 +64,7 @@ void moveObstacle()
     for (int i = 0; i < 4; i++)
     {
         screen[i][0] = 0;
-        for (int j = 1; j < 15; j++)
+        for (int j = 1; j < 16; j++)
         {
             if (screen[i][j] != 1)
                 continue;
@@ -83,7 +85,7 @@ void refreshFrame()
     clearDisplay();
     for (int i = 0; i < 4; i += 2)
     {
-        for (int j = 0; j < 15; j++)
+        for (int j = 0; j < 16; j++)
         {
             if (screen[i][j] == 0 && screen[i + 1][j] == 0)
                 SEND_CHAR(' ');
@@ -112,6 +114,11 @@ void carGoVrrr(int direction)
         return;
     screen[position][2] = 0;
     position += direction;
+    if(screen[position][2] == 1)
+    {
+        gameON = 0;
+        return;
+    }
     screen[position][2] = 2;
     screenChanged = 1;
 }
@@ -122,7 +129,7 @@ void gameOver()
     SEND_TEXT("GAME OVER");
     gotoSecondLine();
     SEND_TEXT("PUNKTY: ");
-    SEND_NUM(result);
+    SEND_NUMBER(result);
     while(1)
     {
       if ((B4) == 0) break;
@@ -131,18 +138,17 @@ void gameOver()
 
 unsigned int game()
 {
+    unsigned int pressed = 1;
     result = 0;
     frame = 2;
     initScreen();
     refreshFrame();
+    timeCounter = 0;
+    speed = 800;
     gameON = 1;
     screenChanged = 0;
     while (1)
-    {
-        SEND_CMD(DD_RAM_ADDR + 15);
-        SEND_CHAR(screen[0][0] + '0');
-        SEND_CMD(DD_RAM_ADDR);
-        
+    {        
         if(screenChanged == 1)
         {
             refreshFrame();
@@ -163,6 +169,8 @@ unsigned int game()
             pressed = 0;
         
         if(gameON == 0) break;
+        
+        Delay(1000);
     }
     gameOver();
     return result;
@@ -171,9 +179,17 @@ unsigned int game()
 //------------------- przerwania -------------------
 void timer()
 {
-    if (gameON == 0)
-        return;
+    if (gameON == 0) return;
     
+    if(timeCounter++ > 1000)
+    {
+        timeCounter = 0;
+        speed-=10;
+        result++;
+    }
+    
+    if (frameCounter++ <= speed) return;
+    frameCounter = 0;
     moveObstacle();
     if (frame++ >= 2)
     {
@@ -181,5 +197,4 @@ void timer()
         frame = 0;
     }
     screenChanged = 1;
-    result++;
 }

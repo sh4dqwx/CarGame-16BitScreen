@@ -71,11 +71,11 @@ void SEND_TEXT(unsigned char text[])
         SEND_CHAR(text[i]);
 }
 
-void SEND_NUM(int x)
+void SEND_NUMBER(int x)
 {
     char c[5];
     unsigned char i = 0;
-    while(x > 1)
+    while(x > 0)
     {
         c[i] = x%10 + '0';
         x/=10;
