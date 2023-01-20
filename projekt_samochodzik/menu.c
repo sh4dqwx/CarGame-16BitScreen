@@ -42,9 +42,27 @@ void printUsers(int index)
     }
 }
 
-int sort()
+void sort(unsigned char L, unsigned char R)
 {
-    //Sortowanie tutaj
+    if(R - L <= 1) return;
+    unsigned char i=L, j=R, wyn;
+    do
+    {
+        do i++ while(i<=R && userList[i].result < userList[L].result);
+        do j-- while(userList[j].result > userList[L].result);
+        if(i<j)
+        {
+            User tmp = userList[i];
+            userList[i] = userList[j];
+            userList[j] = tmp;
+        }
+    } while(i < j);
+
+    User tmp = userList[L];
+    userList[L] = userList[j];
+    userList[j] = tmp;
+
+    sort(L, j); sort(j+1, R);
 }
 
 void results()
@@ -69,10 +87,10 @@ void results()
         }
         else if ((B1) != 0 && (B2) != 0)
             pressed = 0;
-        
+
         if ((B4) == 0) break;
     }
-    
+
 }
 
 void createUser()
@@ -95,12 +113,12 @@ void createUser()
     {
         SEND_CMD(DD_RAM_ADDR + 12);
         SEND_TEXT(nick);
-        
+
         if ((B1) == 0 && pressed == 0)
         {
             pressed = 1;
             if(++nick[index] > 'Z') nick[index] = 'A';
-            
+
         }
         else if ((B2) == 0 && pressed == 0)
         {
@@ -115,15 +133,15 @@ void createUser()
         }
         else if ((B1) != 0 && (B2) != 0 && (B3) != 0)
             pressed = 0;
-        
+
         if ((B4) == 0) return;
-        
+
         Delay(1000);
     }
-    
+
     for(int i = 0; i < 3; i++)
         userList[userCounter].name[i] = nick[i];
-    
+
     userCounter++;
 }
 
@@ -131,14 +149,14 @@ void initGame()
 {
     if(userCounter == 0)
     {
-        createUser();            
+        createUser();
         if(userCounter == 0)
             return;
-        
+
         userList[0].result = game();
         return;
     }
-    
+
     clearDisplay();
     SEND_TEXT("WYBIERZ GRACZA");
     unsigned int pressed = 1;
@@ -175,10 +193,10 @@ void initGame()
         }
         else if ((B1) != 0 && (B2) != 0)
             pressed = 0;
-        
+
         if ((B3) == 0)
             break;
-        
+
         Delay(1000);
     }
     if (chooseIndex == userCounter) createUser();
@@ -205,7 +223,7 @@ void menu()
         }
         else if((B1) != 0 && (B2) != 0)
             pressed = 0;
-        
+
         Delay(1000);
     }
 }
