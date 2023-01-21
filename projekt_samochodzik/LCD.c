@@ -128,14 +128,15 @@ void InitLCD(void)
     _E(); // toggle E for LCD
 
     SEND_CMD(CG_RAM_ADDR);
-    unsigned char chars[7][8] = {
+    unsigned char chars[8][8] = {
         {31, 31, 31, 31, 0, 0, 0, 0},  // samochód góra (8)
         {0, 0, 0, 0, 31, 31, 31, 31},  // samochód dół (9)
         {15, 30, 30, 15, 0, 0, 0, 0},  // przeszkoda góra (10)
         {0, 0, 0, 0, 15, 30, 30, 15},  // przeszkoda dół (11)
         {7, 14, 30, 30, 30, 30, 14, 7}, // duża przeszkoda (12)
-        {31, 31, 31, 31, 15, 30, 30, 15}, //samochod+przeszkoda (13)
-        {15, 30, 30, 15, 31, 31, 31, 31} // przeszkoda+samochod (14)
+        {31, 31, 31, 31, 15, 30, 30, 15}, //samochód+przeszkoda (13)
+        {15, 30, 30, 15, 31, 31, 31, 31}, // przeszkoda+samochód (14)
+        {0, 10, 31, 31, 31, 14, 4, 0} //życie (15)
     };
     MAKE_DEF_CHAR(chars[0]);
     MAKE_DEF_CHAR(chars[1]);
@@ -144,7 +145,8 @@ void InitLCD(void)
     MAKE_DEF_CHAR(chars[4]);
     MAKE_DEF_CHAR(chars[5]);
     MAKE_DEF_CHAR(chars[6]);
-  
+    MAKE_DEF_CHAR(chars[7]);
+
     SEND_CMD(DD_RAM_ADDR);
     SEND_CMD(DISP_ON);
     SEND_CMD(CLR_DISP);

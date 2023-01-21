@@ -11,6 +11,7 @@
 #define obsBig 12
 #define carObs 13
 #define obsCar 14
+#define life 15
 
 #define B1 BIT4&P4IN
 #define B2 BIT5&P4IN
@@ -26,6 +27,7 @@ unsigned int screenChanged = 0;
 unsigned int timeCounter = 0;
 unsigned int frameCounter = 0;
 unsigned int speed = 0;
+unsigned int lives = 0;
 int position = 0;
 
 //-------------------- funkcje ---------------------
@@ -35,14 +37,14 @@ void generateObstacle()
     for (int i = 0; i < 4; i++)
     {
         int random = rand() % 2;
-        screen[i][15] = random;
+        screen[i][14] = random;
         if (random == 1)
             obstacles++;
     }
     if (obstacles == 4)
     {
         int random = rand() % 4;
-        screen[random][15] = 0;
+        screen[random][14] = 0;
     }
 }
 
@@ -70,7 +72,7 @@ void moveObstacle()
                 continue;
             if (screen[i][j - 1] == 2)
             {
-                gameON = 0;
+                if(lives-- == 0) gameON = 0;
                 return;
             }
 
@@ -85,7 +87,7 @@ void refreshFrame()
     clearDisplay();
     for (int i = 0; i < 4; i += 2)
     {
-        for (int j = 0; j < 16; j++)
+        for (int j = 0; j < 15; j++)
         {
             if (screen[i][j] == 0 && screen[i + 1][j] == 0)
                 SEND_CHAR(' ');
@@ -104,11 +106,15 @@ void refreshFrame()
             else if (screen[i][j] == 1 && screen[i + 1][j] == 1)
                 SEND_CHAR(obsBig);
         }
+
+        if(i == 0 && lives == 2) SEND_CHAR(life);
+        if(i == 2 && lives != 0) SEND_CHAR(life);
+
         gotoSecondLine();
     }
 }
 
-void carGoVrrr(int direction)
+void moveCar(int direction)
 {
     if (position + direction < 0 || position + direction > 3)
         return;
@@ -116,7 +122,7 @@ void carGoVrrr(int direction)
     position += direction;
     if(screen[position][2] == 1)
     {
-        gameON = 0;
+        if(lives-- == 0) gameON = 0;
         return;
     }
     screen[position][2] = 2;
@@ -145,31 +151,32 @@ unsigned int game()
     refreshFrame();
     timeCounter = 0;
     speed = 800;
+    lives = 2;
     gameON = 1;
     screenChanged = 0;
     while (1)
-    {        
+    {
         if(screenChanged == 1)
         {
             refreshFrame();
             screenChanged = 0;
         }
-        
+
         if ((B1) == 0 && pressed == 0)
         {
             pressed = 1;
-            carGoVrrr(-1);
+            moveCar(-1);
         }
         else if ((B2) == 0 && pressed == 0)
         {
             pressed = 1;
-            carGoVrrr(1);
+            moveCar(1);
         }
         else if ((B1) != 0 && (B2) != 0)
             pressed = 0;
-        
+
         if(gameON == 0) break;
-        
+
         Delay(1000);
     }
     gameOver();
@@ -180,14 +187,14 @@ unsigned int game()
 void timer()
 {
     if (gameON == 0) return;
-    
+
     if(timeCounter++ > 1000)
     {
         timeCounter = 0;
-        speed-=10;
+        if(speed > 300) speed-=10;
         result++;
     }
-    
+
     if (frameCounter++ <= speed) return;
     frameCounter = 0;
     moveObstacle();
