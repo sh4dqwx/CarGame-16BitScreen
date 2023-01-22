@@ -3,20 +3,53 @@
 #include "game.h"
 #include "portyLcd.h"
 
+/**
+ * \brief Definiowanie przycisku B1
+ *  B1 oznacza skrajny lewy przycisk
+ */
 #define B1 BIT4&P4IN
+/**
+ * \brief Definiowanie przycisku B2
+ *  B2 oznacza kolejno drugi z lewej strony przycisk
+ */
 #define B2 BIT5&P4IN
+/**
+ * \brief Definiowanie przycisku B3
+ *  B3 oznacza koljeno drugi z prawej strony przycisk
+ */
 #define B3 BIT6&P4IN
+/**
+ * \brief Definiowanie przycisku B4
+ *  B5 oznacza skrajny prawy przycisk
+ */
 #define B4 BIT7&P4IN
 
 //---------------- zmienne globalne ----------------
+/**
+ * \brief Definiowanie struktury uzytkownika
+ * Zawiera 3 elementowa tablice character'ow Nicku oraz 
+ * wynik koncowy konkretnego uzytkownika 
+ */
 struct User
 {
     char name[3];
     unsigned int result;
 } typedef User;
 
+
+/**
+ * \brief Definiowanie zmiennej, ktora przechowuje wartosc wyboru
+ */
 unsigned int choice = 0;
+
+/**
+ * \brief Definiowanie zmiennej, ktora przechowuje liczbe nickow uzytkownikow zapisanych w grze
+ */
 unsigned int userCounter = 0;
+
+/**
+ * \brief Inicjalizacja na stale 10 uzytkownikow w grze
+ */
 User userList[10];
 //-------------------- funkcje ---------------------
 
