@@ -4,30 +4,109 @@
 #include "LCD.h"
 #include "portyLcd.h"
 
+/**
+ * \brief Zdefiniowanie zmiennej carUp na liczbe 8
+ * Znak, ktory przechowuje samochodz na gornej czesci linii
+ */
 #define carUp 8
+/**
+ * \brief Zdefiniowanie zmiennej carDown na liczbe 9
+ * Znak, ktory przechowuje samochod na dolnej czesci linii
+ */
 #define carDown 9
+/**
+ * \brief Zdefiniowanie zmiennej obsUp na liczbe 10
+ * Znak, ktory przechowuje przeszkode na gornej czesci linii
+ */
 #define obsUp 10
+/**
+ * \brief Zdefiniowanie zmiennej obsDown na liczbe 11
+ * Znak, ktory przechowuje przeszkode na dolnej czesci linii
+ */
 #define obsDown 11
+/**
+ * \brief Zdefiniowanie zmiennej obsBig na liczbe 12
+ * Znak, ktory przechowuje przeszkode na calej szerokosci inii
+ */
 #define obsBig 12
+/**
+ * \brief Zdefiniowanie zmiennej carObs na liczbe 13
+ * Znak, ktory przechowuje samochod na gornej czesci linii, a na dolnej czesci linii znajduje sie przeszkoda
+ */
 #define carObs 13
+/**
+ * \brief Zdefniowanie zmiennej obsCar na liczbe 14
+ * Znak, ktory przechowuje przeszkode na gornej czesci linii, a na dolnej czesci linii znajduje sie samochod
+ */
 #define obsCar 14
+/**
+ * \brief Zdefiniowanie zmiennej Life na liczbe 15
+ * Znak, ktory bedzie sie wyswietlał serce na cala linie
+ */
 #define life 15
 
+/**
+ * \brief Definiowanie przycisku B1
+ *  B1 oznacza skrajny lewy przycisk
+ */
+
 #define B1 BIT4&P4IN
+/**
+ * \brief Definiowanie przycisku B2
+ *  B2 oznacza kolejno drugi z lewej strony przycisk
+ */
 #define B2 BIT5&P4IN
+/**
+ * \brief Definiowanie przycisku B3
+ *  B3 oznacza koljeno drugi z prawej strony przycisk
+ */
 #define B3 BIT6&P4IN
+/**
+ * \brief Definiowanie przycisku B4
+ *  B5 oznacza skrajny prawy przycisk
+ */
 #define B4 BIT7&P4IN
 
 //---------------- zmienne globalne ----------------
+/**
+ * \brief Definiowanie wyniku koncowego result
+ */
 unsigned int result = 0;
+/**
+ * \brief Definiowanie dwuwymiarowej tablicy wyswietlacza
+ */
 unsigned int screen[4][16];
+/**
+ * \brief Definiowanie zmiennej, ktora odlicza liczbe klatek do wygenerowania przeszkod
+ */
 unsigned int frame = 0;
+/**
+ * \brief Definiowanie zmiennej, ktora informuje czy gra jest właczona czy nie 
+ */
 unsigned int gameON = 0;
+/**
+ * \brief Definiowanie zmiennej ktora informuje czy nalezy odswiezyc ekran
+ */
 unsigned int screenChanged = 0;
+/**
+ * \brief Definiowanie zmiennej ktora odlicza sekunde aby wywolac konkretne funkcje
+ */
 unsigned int timeCounter = 0;
+/**
+ * \brief Definiowanie zmiennej odliczajaca czas do kolejnego przesuniecia ekranu
+ */
 unsigned int frameCounter = 0;
+/**
+ * \brief Definiowanie zmiennej predkosc gry
+ */
 unsigned int speed = 0;
+/**
+ * \brief Definiowanie zmiennej na ktora jest przypisana liczba zyc 
+ */
 unsigned int lives = 0;
+/**
+ * \brief Definiowanie zmiennej na ktora jest przypisana aktualna pozycja
+ */
 int position = 0;
 
 //-------------------- funkcje ---------------------
